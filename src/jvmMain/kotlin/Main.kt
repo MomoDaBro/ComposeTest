@@ -27,8 +27,7 @@ fun main() = application {
 //                )
 
             drawRect(
-                color = Color.Red,
-                size =
+                color = Color.Red
             )
         }
 
