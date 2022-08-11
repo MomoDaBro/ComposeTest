@@ -39,18 +39,19 @@ fun app() = application {
         title = "Compose for Desktop",
         state = rememberWindowState(width = canvasWidth.dp, height = canvasHeight.dp),
         onKeyEvent = {
+
             if (it.key == Key.DirectionRight) {
-                offsetHorizontal.value += 10
+                offsetHorizontal.value += 40
             }
 
             if (it.key == Key.DirectionLeft) {
-                offsetHorizontal.value -= 10
+                offsetHorizontal.value -= 40
             }
             if (it.key == Key.DirectionDown) {
-                offsetVertical.value += 10
+                offsetVertical.value += 40
             }
             if (it.key == Key.DirectionUp) {
-                offsetVertical.value -= 10
+                offsetVertical.value -= 40
             }
             true
         }
@@ -82,23 +83,109 @@ fun app() = application {
                 )
             }
 
-
-            fun addCyanSquare(row :Int,col :Int) {
+            fun addYellowSquare(row: Int, col: Int) {
                 drawRect(
                     color = Color.Black,
-                    topLeft = Offset(xGridStart.toFloat()+squareSize*col, yGridStart.toFloat()+squareSize*row),
+                    topLeft = Offset(
+                        xGridStart.toFloat() + squareSize * col + offsetHorizontal.value,
+                        yGridStart.toFloat() + squareSize * row + offsetVertical.value
+                    ),
                     size = Size(squareSize, squareSize)
                 )
 
                 drawRect(
-                    color = Color.Cyan,
-                    topLeft = Offset((xGridStart+differenceInSizes/2f)+squareSize*col, (yGridStart+differenceInSizes/2f)+squareSize*row),
+                    color = Color.Yellow,
+                    topLeft = Offset(
+                        (xGridStart + differenceInSizes / 2f) + squareSize * col + offsetHorizontal.value,
+                        (yGridStart + differenceInSizes / 2f) + squareSize * row + offsetVertical.value
+                    ),
+                    size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
+                )
+
+                drawRect(
+                    color = Color.Black,
+                    topLeft = Offset(
+                        xGridStart.toFloat() + (squareSize * col) + squareSize + offsetHorizontal.value,
+                        yGridStart.toFloat() + (squareSize * row) + offsetVertical.value
+                    ),
+                    size = Size(squareSize, squareSize)
+                )
+
+                drawRect(
+                    color = Color.Yellow,
+                    topLeft = Offset(
+                        (xGridStart + differenceInSizes / 2f) + (squareSize * col) + squareSize + offsetHorizontal.value,
+                        (yGridStart + differenceInSizes / 2f) + (squareSize * row) + offsetVertical.value
+                    ),
+                    size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
+                )
+
+                drawRect(
+                    color = Color.Black,
+                    topLeft = Offset(
+                        xGridStart.toFloat() + (squareSize * col) + offsetHorizontal.value,
+                        yGridStart.toFloat() + (squareSize * row) + squareSize + offsetVertical.value
+                    ),
+                    size = Size(squareSize, squareSize)
+                )
+
+                drawRect(
+                    color = Color.Yellow,
+                    topLeft = Offset(
+                        (xGridStart + differenceInSizes / 2f) + (squareSize * col) + offsetHorizontal.value,
+                        (yGridStart + differenceInSizes / 2f) + (squareSize * row) + squareSize + offsetVertical.value
+                    ),
+                    size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
+                )
+
+                drawRect(
+                    color = Color.Black,
+                    topLeft = Offset(
+                        xGridStart.toFloat() + (squareSize * col) + squareSize + offsetHorizontal.value,
+                        yGridStart.toFloat() + (squareSize * row) + squareSize + offsetVertical.value
+                    ),
+                    size = Size(squareSize, squareSize)
+                )
+
+                drawRect(
+                    color = Color.Yellow,
+                    topLeft = Offset(
+                        (xGridStart + differenceInSizes / 2f) + (squareSize * col) + squareSize + offsetHorizontal.value,
+                        (yGridStart + differenceInSizes / 2f) + (squareSize * row) + squareSize + offsetVertical.value
+                    ),
                     size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
                 )
 
             }
 
-            addCyanSquare(4,7)
+            fun addCyanLine(row: Int, col: Int) {
+
+                repeat(4) {
+                    drawRect(
+                        color = Color.Black,
+                        topLeft = Offset(
+                            xGridStart.toFloat() + squareSize * col + offsetHorizontal.value,
+                            yGridStart.toFloat() + squareSize * row + (squareSize * it) + offsetVertical.value
+                        ),
+                        size = Size(squareSize, squareSize)
+                    )
+                }
+
+                repeat(4) {
+                    drawRect(
+                        color = Color.Cyan,
+                        topLeft = Offset(
+                            (xGridStart + differenceInSizes / 2f) + squareSize * col + offsetHorizontal.value,
+                            (yGridStart.toFloat() + differenceInSizes / 2f) + squareSize * row + (squareSize * it) + offsetVertical.value
+                        ),
+                        size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
+                    )
+                }
+            }
+
+            addYellowSquare(5, 3)
+            addCyanLine(14, 4)
+
         }
     }
 }
