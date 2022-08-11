@@ -1,9 +1,6 @@
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -17,12 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import kotlinx.coroutines.delay
-import kotlin.random.Random
-import androidx.compose.foundation.layout.size
-import androidx.compose.ui.graphics.drawscope.inset
-import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.graphics.vector.DefaultStrokeLineWidth
 
 
 fun main() = app()
@@ -31,20 +22,22 @@ fun main() = app()
 fun app() = application {
     val offsetHorizontal = remember { mutableStateOf(0) }
     val offsetVertical = remember { mutableStateOf(0) }
+    val canvasHeight = 1000
+    val canvasWidth = 1000
 
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(1000)
-            offsetHorizontal.value = Random.nextInt(0, 100)
-            offsetVertical.value = Random.nextInt(0, 100)
-            println("randomize!")
-        }
-    }
+//    LaunchedEffect(Unit) {
+//        while (true) {
+//            delay(1000)
+//            offsetHorizontal.value = Random.nextInt(0, 100)
+//            offsetVertical.value = Random.nextInt(0, 100)
+//            println("randomize!")
+//        }
+//    }
 
     Window(
         onCloseRequest = ::exitApplication,
         title = "Compose for Desktop",
-        state = rememberWindowState(width = 500.dp, height = 500.dp),
+        state = rememberWindowState(width = canvasWidth.dp, height = canvasHeight.dp),
         onKeyEvent = {
             if (it.key == Key.DirectionRight) {
                 offsetHorizontal.value += 10
@@ -64,94 +57,48 @@ fun app() = application {
     ) {
 
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val canvasWidth = size.width
-            val canvasHeight = size.height
-            var xOffset = 0f
-//            drawRect(
-//                color = Color.DarkGray,
-//                topLeft = Offset(canvasWidth / 4 + offsetHorizontal.value, canvasHeight / 4 + offsetVertical.value),
-//                size = Size(canvasWidth / 2, canvasHeight / 2)
-//            )
+            val squareSize = 40f
+            val numColumns = 10
+            val numRows = 20
+            val xGridStart = 50
+            val yGridStart = 50
+            val differenceInSizes = 8
 
-            repeat(9) {
-                xOffset =+ 100f
+            repeat(numColumns + 1) {
                 drawLine(
-                color = Color.Black,
-                start = Offset(xOffset, -20f),
-                end = Offset(xOffset, 1000f),
-                strokeWidth = 10f
-            )
+                    color = Color.Black,
+                    start = Offset(xGridStart + squareSize * it, yGridStart.toFloat()),
+                    end = Offset(xGridStart + squareSize * it, yGridStart + numRows * squareSize),
+                    strokeWidth = 1f
+                )
+            }
+
+            repeat(numRows + 1) {
+                drawLine(
+                    color = Color.Black,
+                    start = Offset(xGridStart.toFloat(), yGridStart + squareSize * it),
+                    end = Offset(xGridStart + squareSize * numColumns, yGridStart + squareSize * it),
+                    strokeWidth = 1f
+                )
+            }
+
+
+            fun addCyanSquare(row :Int,col :Int) {
+                drawRect(
+                    color = Color.Black,
+                    topLeft = Offset(xGridStart.toFloat()+squareSize*col, yGridStart.toFloat()+squareSize*row),
+                    size = Size(squareSize, squareSize)
+                )
+
+                drawRect(
+                    color = Color.Cyan,
+                    topLeft = Offset((xGridStart+differenceInSizes/2f)+squareSize*col, (yGridStart+differenceInSizes/2f)+squareSize*row),
+                    size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
+                )
 
             }
 
-//            drawLine(
-//                color = Color.Black,
-//                start = Offset(100f, -20f),
-//                end = Offset(100f, 1000f),
-//                strokeWidth = 10f
-//            )
-//
-//            drawLine(
-//                color = Color.Black,
-//                start = Offset(200f, -20f),
-//                end = Offset(200f, 1000f),
-//                strokeWidth = 10f
-//            )
-//
-//            drawLine(
-//                color = Color.Black,
-//                start = Offset(300f, -20f),
-//                end = Offset(300f, 1000f),
-//                strokeWidth = 10f
-//            )
-//
-//            drawLine(
-//                color = Color.Black,
-//                start = Offset(400f, -20f),
-//                end = Offset(400f, 1000f),
-//                strokeWidth = 10f
-//            )
-//
-//            drawLine(
-//                color = Color.Black,
-//                start = Offset(500f, -20f),
-//                end = Offset(500f, 1000f),
-//                strokeWidth = 10f
-//            )
-//
-//            drawLine(
-//                color = Color.Black,
-//                start = Offset(600f, -20f),
-//                end = Offset(600f, 1000f),
-//                strokeWidth = 10f
-//            )
-//
-//            drawLine(
-//                color = Color.Black,
-//                start = Offset(700f, -20f),
-//                end = Offset(700f, 1000f),
-//                strokeWidth = 10f
-//            )
-//
-//            drawLine(
-//                color = Color.Black,
-//                start = Offset(800f, -20f),
-//                end = Offset(800f, 1000f),
-//                strokeWidth = 10f
-//            )
-//
-//            drawLine(
-//                color = Color.Black,
-//                start = Offset(900f, -20f),
-//                end = Offset(900f, 1000f),
-//                strokeWidth = 10f
-//            )
+            addCyanSquare(4,7)
         }
     }
-}
-
-@Preview
-@Composable
-fun MessageCard() {
-    Text("Hello World")
 }
