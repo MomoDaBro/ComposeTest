@@ -19,6 +19,10 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import kotlinx.coroutines.delay
 import kotlin.random.Random
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.graphics.drawscope.inset
+import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.vector.DefaultStrokeLineWidth
 
 
 fun main() = app()
@@ -29,7 +33,7 @@ fun app() = application {
     val offsetVertical = remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
-        while (true){
+        while (true) {
             delay(1000)
             offsetHorizontal.value = Random.nextInt(0, 100)
             offsetVertical.value = Random.nextInt(0, 100)
@@ -62,12 +66,86 @@ fun app() = application {
         Canvas(modifier = Modifier.fillMaxSize()) {
             val canvasWidth = size.width
             val canvasHeight = size.height
+            var xOffset = 0f
+//            drawRect(
+//                color = Color.DarkGray,
+//                topLeft = Offset(canvasWidth / 4 + offsetHorizontal.value, canvasHeight / 4 + offsetVertical.value),
+//                size = Size(canvasWidth / 2, canvasHeight / 2)
+//            )
 
-            drawRect(
-                color = Color.DarkGray,
-                topLeft = Offset(canvasWidth / 4 + offsetHorizontal.value, canvasHeight / 4 + offsetVertical.value),
-                size = Size(canvasWidth / 2, canvasHeight / 2)
+            repeat(9) {
+                xOffset =+ 100f
+                drawLine(
+                color = Color.Black,
+                start = Offset(xOffset, -20f),
+                end = Offset(xOffset, 1000f),
+                strokeWidth = 10f
             )
+
+            }
+
+//            drawLine(
+//                color = Color.Black,
+//                start = Offset(100f, -20f),
+//                end = Offset(100f, 1000f),
+//                strokeWidth = 10f
+//            )
+//
+//            drawLine(
+//                color = Color.Black,
+//                start = Offset(200f, -20f),
+//                end = Offset(200f, 1000f),
+//                strokeWidth = 10f
+//            )
+//
+//            drawLine(
+//                color = Color.Black,
+//                start = Offset(300f, -20f),
+//                end = Offset(300f, 1000f),
+//                strokeWidth = 10f
+//            )
+//
+//            drawLine(
+//                color = Color.Black,
+//                start = Offset(400f, -20f),
+//                end = Offset(400f, 1000f),
+//                strokeWidth = 10f
+//            )
+//
+//            drawLine(
+//                color = Color.Black,
+//                start = Offset(500f, -20f),
+//                end = Offset(500f, 1000f),
+//                strokeWidth = 10f
+//            )
+//
+//            drawLine(
+//                color = Color.Black,
+//                start = Offset(600f, -20f),
+//                end = Offset(600f, 1000f),
+//                strokeWidth = 10f
+//            )
+//
+//            drawLine(
+//                color = Color.Black,
+//                start = Offset(700f, -20f),
+//                end = Offset(700f, 1000f),
+//                strokeWidth = 10f
+//            )
+//
+//            drawLine(
+//                color = Color.Black,
+//                start = Offset(800f, -20f),
+//                end = Offset(800f, 1000f),
+//                strokeWidth = 10f
+//            )
+//
+//            drawLine(
+//                color = Color.Black,
+//                start = Offset(900f, -20f),
+//                end = Offset(900f, 1000f),
+//                strokeWidth = 10f
+//            )
         }
     }
 }
