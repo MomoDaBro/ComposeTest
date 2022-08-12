@@ -1,6 +1,5 @@
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -64,6 +63,7 @@ fun app() = application {
             val xGridStart = 50
             val yGridStart = 50
             val differenceInSizes = 8
+            val orange = Color(red =0xFF, green = 0xFF, blue = 0xFF)
 
             repeat(numColumns + 1) {
                 drawLine(
@@ -183,8 +183,35 @@ fun app() = application {
                 }
             }
 
-            addYellowSquare(5, 3)
-            addCyanLine(14, 4)
+            fun addOrange(row: Int, col : Int){
+
+                repeat(3) {
+                    drawRect(
+                        color = Color.Black,
+                        topLeft = Offset(
+                            xGridStart.toFloat() + squareSize * col + offsetHorizontal.value,
+                            yGridStart.toFloat() + squareSize * row + (squareSize * it) + offsetVertical.value
+                        ),
+                        size = Size(squareSize, squareSize)
+                    )
+                }
+
+                repeat(3) {
+                    drawRect(
+                        color = orange,
+                        topLeft = Offset(
+                            (xGridStart + differenceInSizes / 2f) + squareSize * col + offsetHorizontal.value,
+                            (yGridStart.toFloat() + differenceInSizes / 2f) + squareSize * row + (squareSize * it) + offsetVertical.value
+                        ),
+                        size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
+                    )
+                }
+
+            }
+
+            //addYellowSquare(5, 3)
+            //addCyanLine(11, 3)
+            addOrange(1,1)
 
         }
     }
