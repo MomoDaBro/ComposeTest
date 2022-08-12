@@ -57,105 +57,29 @@ fun app() = application {
     ) {
 
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val squareSize = 40f
-            val numColumns = 10
-            val numRows = 20
+
             val xGridStart = 50
             val yGridStart = 50
-            val differenceInSizes = 8
-            val orange = Color(red =0xFF, green = 0xFF, blue = 0xFF)
 
-            repeat(numColumns + 1) {
-                drawLine(
-                    color = Color.Black,
-                    start = Offset(xGridStart + squareSize * it, yGridStart.toFloat()),
-                    end = Offset(xGridStart + squareSize * it, yGridStart + numRows * squareSize),
-                    strokeWidth = 1f
-                )
-            }
+            translate(xGridStart.toFloat(), yGridStart.toFloat()) {
+                repeat(NUM_COL + 1) {
+                    drawLine(
+                        color = Color.Black,
+                        start = Offset(CELL_SIZE * it, 0f),
+                        end = Offset(CELL_SIZE * it, NUM_ROW * CELL_SIZE),
+                        strokeWidth = 1f
+                    )
+                }
 
-            repeat(numRows + 1) {
-                drawLine(
-                    color = Color.Black,
-                    start = Offset(xGridStart.toFloat(), yGridStart + squareSize * it),
-                    end = Offset(xGridStart + squareSize * numColumns, yGridStart + squareSize * it),
-                    strokeWidth = 1f
-                )
-            }
-
-            fun addYellowSquare(row: Int, col: Int) {
-                drawRect(
-                    color = Color.Black,
-                    topLeft = Offset(
-                        xGridStart.toFloat() + squareSize * col + offsetHorizontal.value,
-                        yGridStart.toFloat() + squareSize * row + offsetVertical.value
-                    ),
-                    size = Size(squareSize, squareSize)
-                )
-
-                drawRect(
-                    color = Color.Yellow,
-                    topLeft = Offset(
-                        (xGridStart + differenceInSizes / 2f) + squareSize * col + offsetHorizontal.value,
-                        (yGridStart + differenceInSizes / 2f) + squareSize * row + offsetVertical.value
-                    ),
-                    size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
-                )
-
-                drawRect(
-                    color = Color.Black,
-                    topLeft = Offset(
-                        xGridStart.toFloat() + (squareSize * col) + squareSize + offsetHorizontal.value,
-                        yGridStart.toFloat() + (squareSize * row) + offsetVertical.value
-                    ),
-                    size = Size(squareSize, squareSize)
-                )
-
-                drawRect(
-                    color = Color.Yellow,
-                    topLeft = Offset(
-                        (xGridStart + differenceInSizes / 2f) + (squareSize * col) + squareSize + offsetHorizontal.value,
-                        (yGridStart + differenceInSizes / 2f) + (squareSize * row) + offsetVertical.value
-                    ),
-                    size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
-                )
-
-                drawRect(
-                    color = Color.Black,
-                    topLeft = Offset(
-                        xGridStart.toFloat() + (squareSize * col) + offsetHorizontal.value,
-                        yGridStart.toFloat() + (squareSize * row) + squareSize + offsetVertical.value
-                    ),
-                    size = Size(squareSize, squareSize)
-                )
-
-                drawRect(
-                    color = Color.Yellow,
-                    topLeft = Offset(
-                        (xGridStart + differenceInSizes / 2f) + (squareSize * col) + offsetHorizontal.value,
-                        (yGridStart + differenceInSizes / 2f) + (squareSize * row) + squareSize + offsetVertical.value
-                    ),
-                    size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
-                )
-
-                drawRect(
-                    color = Color.Black,
-                    topLeft = Offset(
-                        xGridStart.toFloat() + (squareSize * col) + squareSize + offsetHorizontal.value,
-                        yGridStart.toFloat() + (squareSize * row) + squareSize + offsetVertical.value
-                    ),
-                    size = Size(squareSize, squareSize)
-                )
-
-                drawRect(
-                    color = Color.Yellow,
-                    topLeft = Offset(
-                        (xGridStart + differenceInSizes / 2f) + (squareSize * col) + squareSize + offsetHorizontal.value,
-                        (yGridStart + differenceInSizes / 2f) + (squareSize * row) + squareSize + offsetVertical.value
-                    ),
-                    size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
-                )
-
+                repeat(NUM_ROW + 1) {
+                    drawLine(
+                        color = Color.Black,
+                        start = Offset(0f, CELL_SIZE * it),
+                        end = Offset(CELL_SIZE * NUM_COL, CELL_SIZE * it),
+                        strokeWidth = 1f
+                    )
+                }
+//                drawYellowSquare(1, 2)
             }
 
             fun addCyanLine(row: Int, col: Int) {
@@ -209,10 +133,16 @@ fun app() = application {
 
             }
 
-            //addYellowSquare(5, 3)
-            //addCyanLine(11, 3)
-            addOrange(1,1)
-
+//            addYellowSquare(5, 3)
+//            addCyanLine(11, 3)
+//            addOrange(1,1)
         }
     }
+}
+
+fun DrawScope.drawYellowSquare(row : Int, col: Int, color : Color = Color.Yellow){
+    drawCell(row,col, color)
+    drawCell(row + 1,col,color)
+    drawCell(row,col + 1,color)
+    drawCell(row + 1,col + 1,color)
 }
