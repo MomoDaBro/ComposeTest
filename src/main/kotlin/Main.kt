@@ -1,5 +1,6 @@
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -7,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.unit.dp
@@ -14,6 +17,13 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 
+// Tetris consts
+const val CELL_SIZE = 40f
+const val NUM_COL = 10
+const val NUM_ROW = 20
+
+// Other
+const val CELL_BORDER_SIZE = 8
 
 fun main() = app()
 
@@ -55,7 +65,6 @@ fun app() = application {
             true
         }
     ) {
-
         Canvas(modifier = Modifier.fillMaxSize()) {
 
             val xGridStart = 50
@@ -88,10 +97,10 @@ fun app() = application {
                     drawRect(
                         color = Color.Black,
                         topLeft = Offset(
-                            xGridStart.toFloat() + squareSize * col + offsetHorizontal.value,
-                            yGridStart.toFloat() + squareSize * row + (squareSize * it) + offsetVertical.value
+                            xGridStart.toFloat() + CELL_SIZE * col + offsetHorizontal.value,
+                            yGridStart.toFloat() + CELL_SIZE * row + (CELL_SIZE * it) + offsetVertical.value
                         ),
-                        size = Size(squareSize, squareSize)
+                        size = Size(CELL_SIZE, CELL_SIZE)
                     )
                 }
 
@@ -99,35 +108,35 @@ fun app() = application {
                     drawRect(
                         color = Color.Cyan,
                         topLeft = Offset(
-                            (xGridStart + differenceInSizes / 2f) + squareSize * col + offsetHorizontal.value,
-                            (yGridStart.toFloat() + differenceInSizes / 2f) + squareSize * row + (squareSize * it) + offsetVertical.value
+                            (xGridStart + CELL_BORDER_SIZE / 2f) + CELL_SIZE * col + offsetHorizontal.value,
+                            (yGridStart.toFloat() + CELL_BORDER_SIZE / 2f) + CELL_SIZE * row + (CELL_SIZE * it) + offsetVertical.value
                         ),
-                        size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
+                        size = Size(CELL_SIZE - CELL_BORDER_SIZE, CELL_SIZE - CELL_BORDER_SIZE)
                     )
                 }
             }
 
-            fun addOrange(row: Int, col : Int){
+            fun addOrange(row: Int, col: Int) {
 
                 repeat(3) {
                     drawRect(
                         color = Color.Black,
                         topLeft = Offset(
-                            xGridStart.toFloat() + squareSize * col + offsetHorizontal.value,
-                            yGridStart.toFloat() + squareSize * row + (squareSize * it) + offsetVertical.value
+                            xGridStart.toFloat() + CELL_SIZE * col + offsetHorizontal.value,
+                            yGridStart.toFloat() + CELL_SIZE * row + (CELL_SIZE * it) + offsetVertical.value
                         ),
-                        size = Size(squareSize, squareSize)
+                        size = Size(CELL_SIZE, CELL_SIZE)
                     )
                 }
 
                 repeat(3) {
                     drawRect(
-                        color = orange,
+                        color = Color(red = 255, green = 165, blue = 0),
                         topLeft = Offset(
-                            (xGridStart + differenceInSizes / 2f) + squareSize * col + offsetHorizontal.value,
-                            (yGridStart.toFloat() + differenceInSizes / 2f) + squareSize * row + (squareSize * it) + offsetVertical.value
+                            (xGridStart + CELL_BORDER_SIZE / 2f) + CELL_SIZE * col + offsetHorizontal.value,
+                            (yGridStart.toFloat() + CELL_BORDER_SIZE / 2f) + CELL_SIZE * row + (CELL_SIZE * it) + offsetVertical.value
                         ),
-                        size = Size(squareSize - differenceInSizes, squareSize - differenceInSizes)
+                        size = Size(CELL_SIZE - CELL_BORDER_SIZE, CELL_SIZE - CELL_BORDER_SIZE)
                     )
                 }
 
@@ -145,4 +154,25 @@ fun DrawScope.drawYellowSquare(row : Int, col: Int, color : Color = Color.Yellow
     drawCell(row + 1,col,color)
     drawCell(row,col + 1,color)
     drawCell(row + 1,col + 1,color)
+}
+
+fun DrawScope.drawCyanLine(row: Int, col: Int){
+
+}
+
+fun DrawScope.drawCell(row: Int, col: Int, color: Color) {
+    drawRect(
+        color = Color.Black,
+        topLeft = Offset(CELL_SIZE * col, CELL_SIZE * row),
+        size = Size(CELL_SIZE, CELL_SIZE)
+    )
+
+    drawRect(
+        color = color,
+        topLeft = Offset(
+            (CELL_BORDER_SIZE / 2f) + CELL_SIZE * col,
+            (CELL_BORDER_SIZE / 2f) + CELL_SIZE * row
+        ),
+        size = Size(CELL_SIZE - CELL_BORDER_SIZE, CELL_SIZE - CELL_BORDER_SIZE)
+    )
 }
