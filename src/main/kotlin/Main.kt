@@ -1,15 +1,8 @@
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.unit.dp
@@ -60,12 +53,6 @@ fun app() = application {
             true
         }
     ) {
-
-        Grid {
-            drawCell(1, 2, Orange)
-            drawSquare(10, 2)
-            drawLine(0, 0)
-            drawNormalLPiece(12, 8)
-        }
+        Game()
     }
 }

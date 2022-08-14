@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
 
 val xGridStart = 50
@@ -19,8 +18,8 @@ interface GridScope {
 }
 
 @Composable
-fun Grid(block: GridScope.() -> Unit) {
-    Canvas(modifier = Modifier.fillMaxSize()) {
+fun Grid(modifier: Modifier = Modifier.fillMaxSize(), block: GridScope.() -> Unit) {
+    Canvas(modifier = modifier) {
         translate(xGridStart.toFloat(), yGridStart.toFloat()) {
             repeat(NUM_COL + 1) {
                 drawLine(
