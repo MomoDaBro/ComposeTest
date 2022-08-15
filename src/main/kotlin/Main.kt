@@ -30,6 +30,7 @@ const val CANVAS_WIDTH = 1000
 // Other
 const val CELL_BORDER_SIZE = 8
 val Orange get() = Color(red = 255, green = 165, blue = 0)
+val Purple get() = Color(red = 128, green = 0, blue = 128)
 fun main() = app()
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -66,6 +67,10 @@ fun app() = application {
             drawSquare(10, 2)
             drawLine(0, 0)
             drawNormalLPiece(12, 8)
+            drawTetris(15,4)
+            drawInvertedLPiece(5,3)
+            drawNormalZPiece(4,7)
+            drawInvertedZPiece(8,4)
         }
     }
 }

@@ -14,8 +14,13 @@ val yGridStart = 50
 interface GridScope {
     fun drawCell(row: Int, col: Int, color: Color)
     fun drawNormalLPiece(row: Int, col: Int, color: Color = Orange)
+    fun drawInvertedLPiece(row: Int, col: Int, color: Color = Color.Blue)
     fun drawLine(row: Int, col: Int, color: Color = Color.Cyan)
     fun drawSquare(row: Int, col: Int, color: Color = Color.Yellow)
+    fun drawTetris(row: Int, col: Int, color: Color = Purple)
+    fun drawNormalZPiece(row: Int, col: Int, color: Color = Color.Green)
+    fun drawInvertedZPiece(row: Int, col: Int, color: Color = Color.Red)
+
 }
 
 @Composable
@@ -64,6 +69,13 @@ fun Grid(block: GridScope.() -> Unit) {
                     drawCell(row + 2, col + 1, color)
                 }
 
+                override fun drawInvertedLPiece(row: Int, col: Int, color: Color) {
+                    drawCell(row, col, color)
+                    drawCell(row + 1, col, color)
+                    drawCell(row + 2, col, color)
+                    drawCell(row + 2, col - 1, color)
+                }
+
                 override fun drawLine(row: Int, col: Int, color: Color) {
                     drawCell(row, col, color)
                     drawCell(row + 1, col, color)
@@ -77,6 +89,30 @@ fun Grid(block: GridScope.() -> Unit) {
                     drawCell(row, col + 1, color)
                     drawCell(row + 1, col + 1, color)
                 }
+
+                override fun drawTetris(row: Int, col: Int, color: Color) {
+                    drawCell(row, col, color)
+                    drawCell(row, col + 1, color)
+                    drawCell(row, col + 2, color)
+                    drawCell(row + 1, col + 1, color)
+
+                }
+
+                override fun drawNormalZPiece(row: Int, col: Int, color: Color) {
+                    drawCell(row, col, color)
+                    drawCell(row, col + 1, color)
+                    drawCell(row - 1, col + 1, color)
+                    drawCell(row - 1, col + 2, color)
+                }
+
+                override fun drawInvertedZPiece(row: Int, col: Int, color: Color) {
+                    drawCell(row, col, color)
+                    drawCell(row + 1, col, color)
+                    drawCell(row, col - 1, color)
+                    drawCell(row + 1, col + 1, color)
+                }
+
+
             }.block()
         }
     }
