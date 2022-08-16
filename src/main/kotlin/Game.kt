@@ -1,4 +1,5 @@
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.drawscope.rotate
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
@@ -22,7 +23,7 @@ fun Game() {
     }
 
     Grid {
-        oldPieces.forEach { drawLine(it.first, it.second) }
-        drawLine(curPiecePos.first, curPiecePos.second)
+        oldPieces.forEach { drawIPiece(it.first, it.second) }
+        drawIPiece(curPiecePos.first, curPiecePos.second)
     }
 }

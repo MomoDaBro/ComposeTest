@@ -5,16 +5,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
 
 val xGridStart = 50
 val yGridStart = 50
 
-interface GridScope {
+interface GridScope: DrawScope {
     fun drawCell(row: Int, col: Int, color: Color)
-    fun drawNormalLPiece(row: Int, col: Int, color: Color = Orange)
-    fun drawLine(row: Int, col: Int, color: Color = Color.Cyan)
-    fun drawSquare(row: Int, col: Int, color: Color = Color.Yellow)
+    fun drawJPiece(row: Int = 0, col: Int = 5, color: Color = Orange)
+    fun drawLPiece(row: Int = 0, col: Int = 3, color: Color = Color.Blue)
+    fun drawIPiece(row: Int = 0, col: Int = 3, color: Color = Color.Cyan)
+    fun drawSquare(row: Int = 0, col: Int = 4, color: Color = Color.Yellow)
+    fun drawTPiece(row: Int = 0, col: Int = 4, color: Color = Purple)
+    fun drawSPiece(row: Int = 0, col: Int = 4, color: Color = Color.Green)
+    fun drawZPiece(row: Int = 0, col: Int = 4, color: Color = Color.Red)
+
 }
 
 @Composable
@@ -38,7 +44,7 @@ fun Grid(modifier: Modifier = Modifier.fillMaxSize(), block: GridScope.() -> Uni
                 )
             }
 
-            object : GridScope {
+            object : GridScope, DrawScope by this {
                 override fun drawCell(row: Int, col: Int, color: Color) {
                     drawRect(
                         color = Color.Black,
@@ -56,18 +62,25 @@ fun Grid(modifier: Modifier = Modifier.fillMaxSize(), block: GridScope.() -> Uni
                     )
                 }
 
-                override fun drawNormalLPiece(row: Int, col: Int, color: Color) {
+                override fun drawJPiece(row: Int, col: Int, color: Color) {
                     drawCell(row, col, color)
                     drawCell(row + 1, col, color)
-                    drawCell(row + 2, col, color)
-                    drawCell(row + 2, col + 1, color)
+                    drawCell(row + 1, col - 1, color)
+                    drawCell(row + 1, col - 2, color)
                 }
 
-                override fun drawLine(row: Int, col: Int, color: Color) {
+                override fun drawLPiece(row: Int, col: Int, color: Color) {
                     drawCell(row, col, color)
                     drawCell(row + 1, col, color)
-                    drawCell(row + 2, col, color)
-                    drawCell(row + 3, col, color)
+                    drawCell(row + 1, col + 1, color)
+                    drawCell(row + 1, col + 2, color)
+                }
+
+                override fun drawIPiece(row: Int, col: Int, color: Color) {
+                    drawCell(row, col, color)
+                    drawCell(row, col + 1, color)
+                    drawCell(row, col + 2, color)
+                    drawCell(row, col + 3, color)
                 }
 
                 override fun drawSquare(row: Int, col: Int, color: Color) {
@@ -76,6 +89,30 @@ fun Grid(modifier: Modifier = Modifier.fillMaxSize(), block: GridScope.() -> Uni
                     drawCell(row, col + 1, color)
                     drawCell(row + 1, col + 1, color)
                 }
+
+                override fun drawTPiece(row: Int, col: Int, color: Color) {
+                    drawCell(row, col, color)
+                    drawCell(row + 1, col, color)
+                    drawCell(row + 1, col + 1, color)
+                    drawCell(row + 1, col - 1, color)
+
+                }
+
+                override fun drawSPiece(row: Int, col: Int, color: Color) {
+                    drawCell(row, col, color)
+                    drawCell(row, col + 1, color)
+                    drawCell(row + 1, col, color)
+                    drawCell(row + 1, col - 1, color)
+                }
+
+                override fun drawZPiece(row: Int, col: Int, color: Color) {
+                    drawCell(row, col, color)
+                    drawCell(row, col - 1, color)
+                    drawCell(row + 1, col, color)
+                    drawCell(row + 1, col + 1, color)
+                }
+
+
             }.block()
         }
     }
