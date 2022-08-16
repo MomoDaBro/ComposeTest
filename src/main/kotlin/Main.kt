@@ -63,14 +63,14 @@ fun app() = application {
     ) {
 
         Grid {
-            drawCell(1, 2, Orange)
-            drawSquare(10, 2)
-            drawLine(0, 0)
-            drawNormalLPiece(12, 8)
-            drawTetris(15,4)
-            drawInvertedLPiece(5,3)
-            drawNormalZPiece(4,7)
-            drawInvertedZPiece(8,4)
+//            drawCell(1, 2, Orange)
+//            drawSquare(10,2)
+//            drawIPiece(0,0)
+//            drawJPiece(12,8)
+//            drawTPiece(15,4)
+//            drawLPiece(5,3)
+//            drawSPiece(4,7)
+//            drawZPiece(8,4)
         }
     }
 }
