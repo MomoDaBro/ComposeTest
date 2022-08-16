@@ -11,13 +11,13 @@ fun Game() {
     LaunchedEffect(Unit) {
         println("Started running")
         while (true) {
-            delay(10)
-            if (curPiecePos.first < NUM_ROW - 4) {
+            delay(50)
+            if (curPiecePos.first < NUM_ROW - 1) {
                 curPiecePos = curPiecePos.first + 1 to curPiecePos.second
             } else {
                 delay(400)
                 oldPieces += curPiecePos
-                curPiecePos = 0 to Random.nextInt(NUM_COL)
+                curPiecePos = 0 to Random.nextInt(NUM_COL-3)
             }
         }
     }
