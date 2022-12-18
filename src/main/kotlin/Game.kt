@@ -1,9 +1,10 @@
 import androidx.compose.runtime.*
+import androidx.compose.ui.focus.FocusRequester
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
 @Composable
-fun Game() {
+fun Game(focusRequester: FocusRequester) {
     val oldPieces = mutableListOf<Pair<Int, Int>>()
     var curPiecePos by remember { mutableStateOf(0 to 0) }
 
@@ -21,7 +22,7 @@ fun Game() {
         }
     }
 
-    Grid {
+    Grid(focusRequester = focusRequester) {
         oldPieces.forEach { Piece.I.draw(it.first, it.second) }
         Piece.I.draw(curPiecePos.first, curPiecePos.second)
     }
