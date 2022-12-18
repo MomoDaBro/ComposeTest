@@ -1,37 +1,18 @@
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.focusTarget
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
 
 val xGridStart = 50
 val yGridStart = 50
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun Grid(modifier: Modifier = Modifier.fillMaxSize(), focusRequester: FocusRequester, block: DrawScope.() -> Unit) {
-    Canvas(modifier = modifier.focusRequester(focusRequester).focusable()
-        .onKeyEvent {
-            if (it.key == Key.DirectionRight) {
-                println("asd")
-            }
-            true
-        }) {
-
-        focusRequester.requestFocus()
-
+fun Grid(modifier: Modifier = Modifier.fillMaxSize(), block: DrawScope.() -> Unit) {
+    Canvas(modifier = modifier.fillMaxSize()) {
         translate(xGridStart.toFloat(), yGridStart.toFloat()) {
             repeat(NUM_COL + 1) {
                 drawLine(
