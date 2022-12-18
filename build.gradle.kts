@@ -1,10 +1,9 @@
-import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.10"
-    id("org.jetbrains.compose") version "1.1.1"
+    kotlin("jvm") version "1.7.10"
+    id("org.jetbrains.compose") version "1.2.0"
 }
 
 repositories {
@@ -20,6 +19,7 @@ dependencies {
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "11"
     kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    kotlinOptions.freeCompilerArgs += "-Xcontext-receivers"
 }
 
 compose.desktop {
